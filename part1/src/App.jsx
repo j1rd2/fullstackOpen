@@ -1,48 +1,39 @@
-
-/*
-const Content = ... {
-  return (
-    <div>
-      <Part .../>
-      <Part .../>
-      <Part .../>
-    </div>
-  )
-}
-*/
+import { useState } from 'react'
 
 const App = () => {
-const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const sumGood = () => setGood(good + 1);
+  const sumNeutral = () => setNeutral(neutral + 1);
+  const sumBad = () => setBad(bad + 1);
 
   return (
     <div>
-      <h1>{course.name}</h1>
+
+      <h1>Give feedback</h1>
+
+      <button onClick={sumGood}>
+        Good
+      </button>
+      <button onClick={sumNeutral}>
+        Neutral
+      </button>
+      <button onClick={sumBad}>
+        Bad
+      </button>
+      <h1>Statistics</h1>
       <p>
-        {course.parts[0].exercises}
+        {'Good' + good}
       </p>
       <p>
-      {course.parts[1].exercises}
+        {'Neutral' + neutral}
       </p>
       <p>
-      {course.parts[2].exercises}
+        {'Bad' + bad}
       </p>
-      <p>Number of exercises course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises</p>
     </div>
   )
 }
