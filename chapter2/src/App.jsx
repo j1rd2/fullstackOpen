@@ -78,7 +78,7 @@ const App = () => {
 
     <Button handleClick={sumGood} text={'Good'}/>
     <Button handleClick={sumNeutral} text={'Neutral'}/>
-    <Button handleClick={sumNeutral} text={'Bad'}/>
+    <Button handleClick={sumBad} text={'Bad'}/>
 
 
 
