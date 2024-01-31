@@ -1,30 +1,56 @@
 const Course = () =>  {
-  const course = {
+  const courses = [
+    {
     name: 'Half Stack Application Developer',
+    id: 1,
     parts: [
       {
         name: 'Fundamentals of React',
-        exercises: 10
+        exercises: 10,
+        id: 1
       },
       {
         name: 'Using props to pass data',
-        exercises: 7
+        exercises: 7,
+        id: 2
       },
       {
         name: 'State of component',
-        exercises: 14
+        exercises: 14,
+        id: 3
       }
     ]
+  }, 
+  {
+    name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
   }
+]
   return (
     <div>
-      <h1>{course.name}</h1>
-      <p>{course.parts[0].exercises}</p>
-      <p>{course.parts[1].exercises}</p>
-      <p>{course.parts[2].exercises}</p>
-      <p>
-        Number of exercises {course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises}
-      </p>
+      {courses.map((course) => (
+        <div key={course.id}>
+          <h1>{course.name}</h1>
+          {course.parts.map((part) => (
+            <p key={part.id}>{part.name} {part.exercises}</p>
+          ))}
+          <p>
+            Number of exercises {course.parts.reduce((sum, part) => sum + part.exercises, 0)}
+          </p>
+        </div>
+      ))}
     </div>
   );
 }
