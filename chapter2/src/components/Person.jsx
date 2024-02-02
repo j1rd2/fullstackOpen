@@ -1,7 +1,8 @@
-const Person = ({ person }) => {
-    return (
-        <li>{person.name} {person.number}</li>
-    )
-}
+// Person.jsx
+import React from 'react';
 
-export default Person
+const Person = ({ person }) => {
+  return <li>{person.name} {person.number}</li>;
+};
+
+export default Person;
