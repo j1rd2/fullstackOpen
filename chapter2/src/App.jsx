@@ -9,6 +9,12 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault();
+
+    if(persons.some(person => person.name === newName)){
+      alert('This name is already used');
+      return;
+    }
+
     const newPerson = {
       id: new Date().getTime(),
       name: newName,
