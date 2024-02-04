@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios'
 import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 import Persons from './components/Persons';
@@ -6,12 +7,24 @@ import Debug from './components/Debug';
 
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { id: 1, name: 'Jota Pe', number:1}
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
+
+  //Function to fetch the data from server
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/persons'); 
+        setPersons(response.data);
+      } catch (error) {
+        console.error('Error al cargar los datos del servidor:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const addPerson = (event) => {
     event.preventDefault();
