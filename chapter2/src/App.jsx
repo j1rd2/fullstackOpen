@@ -4,6 +4,7 @@ import PersonForm from './components/PersonForm';
 import Filter from './components/Filter';
 import Persons from './components/Persons';
 import Debug from './components/Debug';
+import personsService from './services/persons'
 
 
 const App = () => {
@@ -14,35 +15,35 @@ const App = () => {
 
   //Function to fetch the data from server
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/persons'); 
-        setPersons(response.data);
-      } catch (error) {
-        console.error('Error al cargar los datos del servidor:', error);
-      }
-    };
-
-    fetchData();
+    personsService
+      .fetchData()
+      .then(initialPersons => {
+        setPersons(initialPersons); // refresh persons state
+      });
   }, []);
-
+  
   const addPerson = (event) => {
     event.preventDefault();
-
+  
     if(persons.some(person => person.name === newName)){
       alert(newName + ' is already used');
       return;
     }
-
+  
     const newPerson = {
-      id: new Date().getTime(),
+      id: new Date().getTime(), // id improved
       name: newName,
       number: newNumber
     };
-    setPersons(persons.concat(newPerson));
-    setNewName('');
-    setNewNumber('');
-  };
+  
+    personsService
+      .addPerson(newPerson)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson)); // refresg the state
+        setNewName('');
+        setNewNumber('');
+      });
+  };  
 
   const handleNameChange = (event) => {
     setNewName(event.target.value);
