@@ -61,6 +61,22 @@ const App = () => {
   ? persons.filter(person => person.name.toLowerCase().includes(search.toLowerCase()))
   : persons;
 
+  const handleDelete = (id) => {
+    const person = persons.find(p => p.id === id);
+    if (window.confirm(`Delete ${person.name}?`)) {
+      personsService
+        .deletePerson(id)
+        .then(() => {
+          setPersons(persons.filter(p => p.id !== id));
+        })
+        .catch(error => {
+          alert(`The person '${person.name}' was already deleted from server`);
+          setPersons(persons.filter(p => p.id !== id));
+        });
+    }
+  }
+  
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -75,8 +91,7 @@ const App = () => {
       />
       <Debug newName={newName} newNumber={newNumber}/>
       <h2>Numbers</h2>
-      <Persons persons={personsToShow} />
-
+      <Persons persons={personsToShow} onDelete={handleDelete} />
     </div>
   );
 };
