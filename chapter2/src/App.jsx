@@ -5,13 +5,14 @@ import Filter from './components/Filter';
 import Persons from './components/Persons';
 import Debug from './components/Debug';
 import personsService from './services/persons'
-
+import Notification from './components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
+  const [newNotification, setNewNotification] = useState(' ');
 
   //Function to fetch the data from server
   useEffect(() => {
@@ -42,6 +43,10 @@ const App = () => {
         setPersons(persons.concat(returnedPerson)); // refresg the state
         setNewName('');
         setNewNumber('');
+        setNewNotification(`Added '${newPerson.name}'`)
+        setTimeout(() => {
+          setNewNotification(null);
+        }, 5000);
       });
   };  
 
@@ -70,7 +75,10 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== id));
         })
         .catch(error => {
-          alert(`The person '${person.name}' was already deleted from server`);
+          setNewNotification(` Your contact '${person.name}' was deleted from server`);
+          setTimeout(() => {
+            setNewNotification(null)
+          }, 5000)
           setPersons(persons.filter(p => p.id !== id));
         });
     }
@@ -90,6 +98,7 @@ const App = () => {
         handleNumberChange={handleNumberChange} 
       />
       <Debug newName={newName} newNumber={newNumber}/>
+      <Notification message={newNotification}/>
       <h2>Numbers</h2>
       <Persons persons={personsToShow} onDelete={handleDelete} />
     </div>
